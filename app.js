@@ -15,6 +15,7 @@ import imagesRoute from './routes/imagesRoute.js';
 import logEndpointCalls from './middlewares/logEndpointCalls.js';
 import chalk from 'chalk';
 import getNewPool from './helpers/getNewPool.js';
+dotenv.config();
 
 const pool = getNewPool();
 
@@ -31,7 +32,6 @@ pool.query('SELECT NOW()')
 
 
 
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;

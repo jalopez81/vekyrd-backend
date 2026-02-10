@@ -1,3 +1,6 @@
+-- 1. Create the Database (Run this separately first if needed)
+-- CREATE DATABASE "vekyrd-ecommerce-db";
+
 -- USERS & ROLES
 CREATE TABLE IF NOT EXISTS public.users
 (
@@ -8,6 +11,7 @@ CREATE TABLE IF NOT EXISTS public.users
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- USERS & ROLES
 CREATE TABLE IF NOT EXISTS public.user_roles
 (
     user_id INTEGER NOT NULL REFERENCES public.users(id),
@@ -24,6 +28,7 @@ CREATE TABLE IF NOT EXISTS public.products
     price NUMERIC(10,2) NOT NULL,
     stock INTEGER NOT NULL,
     imageurl VARCHAR(255),
+    category VARCHAR(50),
     sku VARCHAR(50),
     description_large VARCHAR(1000),
     average_rating NUMERIC(3,2) DEFAULT 0

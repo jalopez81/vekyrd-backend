@@ -1,9 +1,3 @@
-INSERT INTO public.user_roles (user_id, role)
-VALUES
-  (1, 'admin'),
-  (1, 'moderator'),
-  (2, 'user');
-
 INSERT INTO public.users (username, password, email, created_at)
 VALUES
 ('jorge0481rd', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'jorge0481rd@gmail.com', CURRENT_TIMESTAMP),
@@ -13,6 +7,12 @@ VALUES
 ('maria06', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'marierea03@gmail.com', CURRENT_TIMESTAMP),
 ('maria07', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'marirerea03@gmail.com', CURRENT_TIMESTAMP),
 ('admin', '$2a$10$HHRs/EStKwsivkZAYTbVGO2.JLdiWW5okIACdruUHc7okkDWHulcW', 'admin@example.com', CURRENT_TIMESTAMP);
+
+INSERT INTO public.user_roles (user_id, role)
+VALUES
+  (1, 'admin'),
+  (1, 'moderator'),
+  (2, 'user');
 
 INSERT INTO public.products (name, description, price, stock, sku, category, description_large, average_rating)
 VALUES
@@ -38,11 +38,12 @@ VALUES
 (2, 5, 4, 'Un shampoo muy bueno, pero me gustaría que fuera un poco más económico.', CURRENT_TIMESTAMP),
 (3, 6, 5, 'El shampoo reparador me dejó el cabello suave y sano.', CURRENT_TIMESTAMP);
 
-INSERT INTO public.orders (user_id, status, total_price, created_at, confirmation_number, order_hash, subtotal, shipping, taxes)
+INSERT INTO public.orders (user_id, status, total_price, created_at, confirmation_number, order_hash, subtotal, shipping, taxes, payment_method)
 VALUES
-(1, 'Procesando', 69.98, CURRENT_TIMESTAMP, 'CONF001', 'ORDERHASH001', 59.99, 5.00, 5.99),
-(2, 'Enviado', 59.99, CURRENT_TIMESTAMP, 'CONF002', 'ORDERHASH002', 50.00, 5.00, 4.99),
-(3, 'Entregado', 119.98, CURRENT_TIMESTAMP, 'CONF003', 'ORDERHASH003', 100.00, 10.00, 9.98);
+(1, 'Procesando', 69.98, CURRENT_TIMESTAMP, 'CONF001', 'ORDERHASH001', 59.99, 5.00, 5.99, 'TARJETA'),
+(2, 'Enviado', 59.99, CURRENT_TIMESTAMP, 'CONF002', 'ORDERHASH002', 50.00, 5.00, 4.99, 'TARJETA'),
+(3, 'Entregado', 119.98, CURRENT_TIMESTAMP, 'CONF003', 'ORDERHASH003', 100.00, 10.00, 9.98, 'TARJETA');
+
 
 INSERT INTO public.wishlist (user_id, product_id)
 VALUES
