@@ -17,21 +17,41 @@ import chalk from 'chalk';
 import getNewPool from './helpers/getNewPool.js';
 dotenv.config();
 
+console.clear();
+
 const pool = getNewPool();
 
-pool.query('SELECT NOW()')
-  .then(result => {
-    console.log('✅ DB Connected:', result.rows[0]);
-  })
-  .catch(err => {
-	console.log('ENV:', process.env.NODE_ENV);
-	console.log('DB HOST:', process.env.DB_HOST);
-	console.log('PROD URL:', process.env.PROD_DATABASE_URL);
-    console.error('❌ DB Connection Error:', err.message);
-  });
+(async () => {
+  try {
+    const res = await pool.query('SELECT NOW(), current_database()');
+    console.log(chalk.cyan('---------------------------------------'));
+    console.log(chalk.green('✅ Base de Datos Operativa'));
+    console.log(chalk.white(`   Hora BD: ${res.rows[0].now}`));
+    console.log(chalk.white(`   Nombre BD: ${res.rows[0].current_database}`));
+    console.log(chalk.cyan('---------------------------------------'));
+  } catch (err) {
+    console.error(chalk.red('❌ Error crítico de conexión:'), err.stack);
+  }
+})();
 
+const checkTables = async () => {
+  try {
+    const res = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+    `);
+    console.log(chalk.magenta('🔍 Tablas encontradas por Node:'), res.rows.map(t => t.table_name));
+  } catch (err) {
+    console.error('Error al listar tablas:', err.message);
+  }
+};
+checkTables();
 
-
+// Agrega esto justo después de conectar el pool
+const dbInfo = await pool.query("SELECT current_database(), current_schema(), session_user");
+console.log('--- Info de Conexión ---');
+console.table(dbInfo.rows);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -53,7 +73,25 @@ app.use('/api/users', usersRoute);
 app.use('/api/wishlist', wishlistRoute);
 app.use('/api/images', imagesRoute);
 
-app.use('/api/saludar', (req, res) => {
+app.get('/api/health', async (_, res) => {
+  try {
+    // Ejecutamos una consulta ultra rápida
+    await pool.query('SELECT 1'); 
+    res.status(200).json({
+      status: 'OK',
+      database: 'Connected',
+      timestamp: new Date()
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'Error',
+      database: 'Disconnected',
+      error: err.message
+    });
+  }
+});
+
+app.use('/api/saludar', (_, res) => {
 	res.status(200).send({
 		type: "cat",
 		name: 'minino',

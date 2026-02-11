@@ -6,10 +6,11 @@ import multer from 'multer';
 import { getProductImageUrls } from '../helpers/getPublicImageUrl.js';
 
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
+	destination: (_, file, cb) => {
+		console.log('destination: ', file);
 		cb(null, './img/products/');
 	},
-	filename: (req, file, cb) => {
+	filename: (_, file, cb) => {
 		cb(null, `${Date.now().toString().substring(0, 6)}_${file.originalname}`);
 	},
 });
@@ -20,7 +21,7 @@ const upload = multer({ storage: storage });
 const pool = getNewPool();
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (_, res) => {
 	try {
 		const products = await pool.query(`
 			SELECT * FROM products 

@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npx nodemon app.js --vekyrd-backend",
-    "prod": "cross-env NODE_ENV=production npx nodemon app.js --vekyrd-backend"
+    "prod": "cross-env NODE_ENV=production npx nodemon app.js --vekyrd-backend",
+    "health": "curl http://localhost:5000/api/health",
+    "db:reset": "cd ./db/migration && sudo -u postgres psql -c 'DROP DATABASE IF EXISTS \"vekyrd-ecommerce-db\";' && sudo -u postgres psql -c 'CREATE DATABASE \"vekyrd-ecommerce-db\";'"
   },
   "keywords": [],
   "author": "",
