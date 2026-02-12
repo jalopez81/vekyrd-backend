@@ -16,7 +16,6 @@ const  getNewPool = () => {
     isProd
       ? {
           connectionString: process.env.PROD_DATABASE_URL,
-          ssl: { rejectUnauthorized: false },
         }
       : {
           user: process.env.DB_USER,
