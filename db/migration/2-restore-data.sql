@@ -8,11 +8,12 @@ VALUES
 ('maria07', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'marirerea03@gmail.com', CURRENT_TIMESTAMP),
 ('admin', '$2a$10$HHRs/EStKwsivkZAYTbVGO2.JLdiWW5okIACdruUHc7okkDWHulcW', 'admin@example.com', CURRENT_TIMESTAMP);
 
+--- ROLES (Usando subconsultas para evitar error de ID) ---
 INSERT INTO public.user_roles (user_id, role)
 VALUES
-  (1, 'admin'),
-  (1, 'moderator'),
-  (2, 'user');
+  ((SELECT id FROM public.users WHERE username = 'jorge0481rd'), 'admin'),
+  ((SELECT id FROM public.users WHERE username = 'jorge0481rd'), 'moderator'),
+  ((SELECT id FROM public.users WHERE username = 'maria03'), 'user');
 
 INSERT INTO public.products (name, description, price, stock, sku, category, description_large, average_rating)
 VALUES
