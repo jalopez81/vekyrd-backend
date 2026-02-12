@@ -1,3 +1,16 @@
+-- 0. Delete all prev tables
+DROP TABLE IF EXISTS inventory_history CASCADE;
+DROP TABLE IF EXISTS order_items CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS product_reviews CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS user_roles CASCADE;
+DROP TABLE IF EXISTS cart CASCADE;
+DROP TABLE IF EXISTS credit_cards CASCADE;
+DROP TABLE IF EXISTS questionnaire CASCADE;
+DROP TABLE IF EXISTS wishlist CASCADE;
+
 -- 1. Create the Database (Run this separately first if needed)
 -- CREATE DATABASE "vekyrd-ecommerce-db";
 

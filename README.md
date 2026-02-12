@@ -23,7 +23,7 @@ sudo -u postgres psql -c 'CREATE DATABASE "vekyrd-ecommerce-db";'
 Execute the table creation script:
 
 ```bash
-psql -U postgres -d vekyrd-ecommerce-db -f 1-create-tables.sql
+psql -h localhost -U postgres -d vekyrd-ecommerce-db -f ./db/migration/1-create-tables.sql
 ```
 
 ### 3. Restore Sample Data (queries in db/migration/2-restore-data.sql)
@@ -31,7 +31,7 @@ psql -U postgres -d vekyrd-ecommerce-db -f 1-create-tables.sql
 Load the initial data into the database:
 
 ```bash
-psql -U postgres -d vekyrd-ecommerce-db -f 2-restore-data.sql
+psql -h localhost -U postgres -d vekyrd-ecommerce-db -f ./db/migration/2-restore-data.sql
 ```
 
 # LOCAL POSTGRES
