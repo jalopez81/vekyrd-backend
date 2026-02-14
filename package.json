@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@getbrevo/brevo": "^2.2.0",
+    "@google/genai": "^1.41.0",
     "@supabase/supabase-js": "^2.49.10",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.3.0",

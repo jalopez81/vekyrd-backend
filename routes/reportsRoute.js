@@ -3,6 +3,7 @@ import getNewPool from '../helpers/getNewPool.js';
 import { openai } from '../helpers/getAiClient.js';
 import { extractHtml } from '../helpers/extractHtml.js';
 import { checkRole } from '../middlewares/checkRole.js';
+import { GoogleGenAI } from '@google/genai';
 
 const pool = getNewPool();
 const router = express.Router();
@@ -203,16 +204,18 @@ router.post('/categories-analysis', async (req, res) => {
 	const body = req.body;
 	const data = JSON.stringify(body);
 
+	const ai = new GoogleGenAI({});
+
 	try {
-		const aiResponse = await openai.chat.completions.create({
-			model: "gpt-4o-mini",
-			messages: [
-				{ role: "developer", content: `response consicely, in spanish,just return html format to be used with dangerouslySetInnerHTML` },
-				{ role: "developer", content: `What's your analysis of this sales report?${data}` }
-			],
+		const geminiResponse = await ai.models.generateContent({
+			model: process.env.GEMINI_MODEL,
+			contents: [
+				{ role: "developer", text: `response consicely, in spanish,just return html format to be used with dangerouslySetInnerHTML` },
+				{ role: "developer", text: `What's your analysis of this sales report?${data}` }
+			]
 		});
 
-		const content = aiResponse.choices[0].message.content;
+		const content = geminiResponse.text;
 
 		const html = extractHtml(content);
 

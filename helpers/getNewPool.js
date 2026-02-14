@@ -15,7 +15,7 @@ const  getNewPool = () => {
   pool = new Pool(
     isProd
       ? {
-          connectionString: process.env.PROD_DATABASE_URL,
+          connectionString: process.env.PROD_DATABASE_URL
         }
       : {
           user: process.env.DB_USER,
