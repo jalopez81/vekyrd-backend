@@ -13,6 +13,6 @@ jobs:
           sudo apt-get install -y postgresql-client
       - name: Ping Supabase Database
         env:
-          DATABASE_URL: '${{ vars.DATABASE_URL }}'
+          PROD_DATABASE_URL: '${{ vars.PROD_DATABASE_URL }}'
         run: |
-          psql "$DATABASE_URL" -c "SELECT 1;"
+          psql "$PROD_DATABASE_URL" -c "SELECT 1;"
