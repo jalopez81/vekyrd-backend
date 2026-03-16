@@ -147,3 +147,7 @@ CREATE TABLE IF NOT EXISTS public.questionnaire
     goals VARCHAR(500),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- to later use pgp_sym_encrypt and pgp_sym_decrypt
+CREATE EXTENSION IF NOT EXISTS pgcrypto;

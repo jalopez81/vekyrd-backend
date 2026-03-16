@@ -53,3 +53,6 @@ VALUES
 (2, 3),
 (3, 4),
 (3, 5);
+
+INSERT INTO credit_cards (user_id, cardholder_name, card_number, cvv, expiration_date, billing_address, created_at) 
+VALUES (1, 'JORGE LOPEZ', pgp_sym_encrypt('4111111111111111', 'this_is_a_random_string_used_for_credit_card_number_encryption'), '123', '12-1-2031', '123 Lincoln St, Miami, FL 33101', CURRENT_TIMESTAMP);

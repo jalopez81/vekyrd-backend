@@ -13,7 +13,7 @@ const ai = new GoogleGenAI({});
 const router = express.Router();
 const pool = getNewPool();
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', async (req, res) => {
 	const hairType = req.body.responses.hairType;
 	const hairLength = req.body.responses.hairLength;
 	const scalpCondition = req.body.responses.scalpCondition;
