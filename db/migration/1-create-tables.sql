@@ -108,7 +108,6 @@ CREATE TABLE IF NOT EXISTS public.cart
     price NUMERIC(10, 2) NOT NULL,
     user_id INTEGER NOT NULL REFERENCES public.users(id),
     order_hash VARCHAR(255),
-    order_id INTEGER REFERENCES public.orders(id),
     created_at TIMESTAMP DEFAULT NOW()
 );
 

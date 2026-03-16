@@ -13,7 +13,7 @@ router.post('/createOrder', verifyToken, async (req, res) => {
 	const userId = req.user.id;
 	try {
 		// Check if the user already has a pending order
-		const existingOrder = await pool.query(
+		await pool.query(
 			'DELETE  FROM orders WHERE user_id = $1 AND status = $2 RETURNING *',
 			[userId, 'pending']
 		);
