@@ -1,19 +1,18 @@
 INSERT INTO public.users (username, password, email, created_at)
 VALUES
-('jorge0481rd', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'jorge0481rd@gmail.com', CURRENT_TIMESTAMP),
-('maria03', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'maria03@gmail.com', CURRENT_TIMESTAMP),
-('maria04', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'maria015@gmail.com', CURRENT_TIMESTAMP),
-('maria05', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'mariaww03@gmail.com', CURRENT_TIMESTAMP),
-('maria06', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'marierea03@gmail.com', CURRENT_TIMESTAMP),
-('maria07', '$2a$10$bEhrMfDPmpcm4s/IFV02E.jhwKof/AJGoeixdjjHu/0eUdogGQrxa', 'marirerea03@gmail.com', CURRENT_TIMESTAMP),
-('admin', '$2a$10$HHRs/EStKwsivkZAYTbVGO2.JLdiWW5okIACdruUHc7okkDWHulcW', 'admin@example.com', CURRENT_TIMESTAMP);
+('admin', '$2a$10$sDCWi13ywuXPWZnRF17sQO/FN984ykvVJjSZ1VAGfQUpUnjvQ/GzG', 'admin@gmail.com', CURRENT_TIMESTAMP),
+('user01', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user01@gmail.com', CURRENT_TIMESTAMP),
+('user02', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user02@gmail.com', CURRENT_TIMESTAMP),
+('user03', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user03@gmail.com', CURRENT_TIMESTAMP),
+('user04', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user04@gmail.com', CURRENT_TIMESTAMP),
+('user05', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user05@gmail.com', CURRENT_TIMESTAMP);
 
 --- ROLES (Usando subconsultas para evitar error de ID) ---
 INSERT INTO public.user_roles (user_id, role)
 VALUES
-  ((SELECT id FROM public.users WHERE username = 'jorge0481rd'), 'admin'),
-  ((SELECT id FROM public.users WHERE username = 'jorge0481rd'), 'moderator'),
-  ((SELECT id FROM public.users WHERE username = 'maria03'), 'user');
+  ((SELECT id FROM public.users WHERE username = 'admin'), 'admin'),
+  ((SELECT id FROM public.users WHERE username = 'user01'), 'user'),
+  ((SELECT id FROM public.users WHERE username = 'user02'), 'moderator');
 
 INSERT INTO public.products (name, description, price, stock, sku, category, description_large, average_rating)
 VALUES

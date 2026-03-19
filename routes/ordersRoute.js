@@ -183,10 +183,10 @@ router.post('/payment', verifyToken, async (req, res) => {
 			const total_price = parseFloat(item.price) * parseFloat(item.quantity);
 			await pool.query(
 				`INSERT INTO cart 
-				(product_id, quantity, price, user_id, order_id, order_hash)
+				(product_id, quantity, price, user_id, order_hash)
 				VALUES 
-				($1, $2, $3, $4, $5, $6)`,
-				[item.productId, item.quantity, item.price, userId, paymentResult.rows[0].id, orderHash]
+				($1, $2, $3, $4, $5)`,
+				[item.productId, item.quantity, item.price, userId, orderHash]
 
 			);
 		}
