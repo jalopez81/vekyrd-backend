@@ -12,7 +12,8 @@
     "db:init:prod": "psql -h aws-1-us-east-2.pooler.supabase.com -p 6543 -U postgres.bigpeixjuzaoybyeppfi -d postgres -f ./db/migration/1-create-tables.sql",
     "db:seed:prod": "psql -h aws-1-us-east-2.pooler.supabase.com -p 6543 -U postgres.bigpeixjuzaoybyeppfi -d postgres -f ./db/migration/2-restore-data.sql",
 
-    "db:reset": "npm run db:init && npm run db:seed"
+    "db:reset": "npm run db:init && npm run db:seed",
+    "db:reset:prod": "npm run db:init:prod && npm run db:seed:prod"    
   },
   "keywords": [],
   "author": "",
