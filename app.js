@@ -76,7 +76,7 @@ app.use('/api/images', imagesRoute);
 app.get('/api/health', async (_, res) => {
   try {
     // Ejecutamos una consulta ultra rápida
-    await pool.query('SELECT 1'); 
+    await pool.query('SELECT 1');
     res.status(200).json({
       status: 'OK',
       database: 'Connected',
@@ -92,11 +92,11 @@ app.get('/api/health', async (_, res) => {
 });
 
 app.use('/api/saludar', (_, res) => {
-	res.status(200).send({
-		type: "cat",
-		name: 'minino',
-		color: 'green'
-	});
+  res.status(200).send({
+    type: "cat",
+    name: 'minino',
+    color: 'green'
+  });
 });
 
 
