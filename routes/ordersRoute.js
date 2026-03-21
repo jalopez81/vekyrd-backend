@@ -62,8 +62,8 @@ router.post('/createOrder', verifyToken, async (req, res) => {
 		cart.forEach(async (item) => {
 			const { id, quantity, price } = item;
 			await pool.query(
-				'INSERT INTO cart (product_id, quantity, price, user_id, order_hash, order_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ',
-				[id, quantity, parseFloat(price), userId, orderHash, order.rows[0].id]
+				'INSERT INTO cart (product_id, quantity, price, user_id, order_hash) VALUES ($1, $2, $3, $4, $5) RETURNING * ',
+				[id, quantity, parseFloat(price), userId, orderHash]
 			);
 		});
 
