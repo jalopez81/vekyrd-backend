@@ -96,7 +96,7 @@ router.post('/updatecart', verifyToken, async (req, res) => {
 	}
 });
 
-router.get('/userOrders', checkRole(['customer', 'admin', 'moderator']), async (req, res) => {
+router.get('/userOrders',  verifyToken, checkRole(['customer', 'admin', 'moderator']), async (req, res) => {
 	const userId = req.user.id;
 	try {
 		const result = await pool.query(`

@@ -1,6 +1,7 @@
 import getNewPool from '../helpers/getNewPool.js';
 import express from 'express';
 import { checkRole } from '../middlewares/checkRole.js';
+import verifyToken from '../middlewares/authMiddleware.js';
 
 const pool = getNewPool();
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get('/',  async (req, res) => {
 	}
 });
 
-router.post('/:productId', checkRole('customer'), async (req, res) => {
+router.post('/:productId', verifyToken, checkRole('customer'), async (req, res) => {
 	const { productId } = req.params;
 
 	if (!productId) {
@@ -38,7 +39,7 @@ router.post('/:productId', checkRole('customer'), async (req, res) => {
 	}
 });
 
-router.delete('/:productId', checkRole('customer'), async (req, res) => {
+router.delete('/:productId', verifyToken, checkRole('customer'), async (req, res) => {
 	const { productId } = req.params;
 
 	try {

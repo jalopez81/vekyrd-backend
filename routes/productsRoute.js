@@ -4,6 +4,7 @@ import express from 'express';
 import { checkRole } from '../middlewares/checkRole.js';
 import multer from 'multer';
 import { getProductImageUrls } from '../helpers/getPublicImageUrl.js';
+import verifyToken from '../middlewares/authMiddleware.js';
 
 const storage = multer.diskStorage({
 	destination: (_, file, cb) => {
@@ -65,7 +66,7 @@ router.post('/add-new-product/images', upload.fields([
 	}
 });
 
-router.put('/changeActiveStatus/:productId', checkRole('admin'), async (req, res) => {
+router.put('/changeActiveStatus/:productId', verifyToken, checkRole('admin'), async (req, res) => {
 	try {
 		const { productId } = req.params;
 		const { newStatus } = req.query;		
@@ -98,7 +99,7 @@ router.post('/add-new-product', async (req, res) => {
 		res.status(500).send(getErrorHtml(500, error.message));
 	}
 });
-router.get('/inventory', checkRole('admin'), async (req, res) => {
+router.get('/inventory', verifyToken, checkRole('admin'), async (req, res) => {
 	try {
 		const inventory = await pool.query('SELECT * FROM products');
 		res.status(200).json(inventory.rows);

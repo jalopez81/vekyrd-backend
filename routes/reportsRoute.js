@@ -4,6 +4,7 @@ import { openai } from '../helpers/getAiClient.js';
 import { extractHtml } from '../helpers/extractHtml.js';
 import { checkRole } from '../middlewares/checkRole.js';
 import { GoogleGenAI } from '@google/genai';
+import verifyToken from '../middlewares/authMiddleware.js';
 
 const pool = getNewPool();
 const router = express.Router();
@@ -102,7 +103,7 @@ const getCustomerData = () => dummyCustomers
 const getProductData = () => dummyProducts
 
 //sales
-router.get('/sales', checkRole('admin'), async (req, res) => {
+router.get('/sales', verifyToken, checkRole('admin'), async (req, res) => {
 	const { start_date, end_date } = req.query;
 
 	try {
@@ -113,7 +114,7 @@ router.get('/sales', checkRole('admin'), async (req, res) => {
 	}
 });
 
-router.post('/top-selling', checkRole('admin'), async (req, res) => {
+router.post('/top-selling', verifyToken, checkRole('admin'), async (req, res) => {
 
 	try {
 		const data = await getTopSellingProducts(req.body);
@@ -124,7 +125,7 @@ router.post('/top-selling', checkRole('admin'), async (req, res) => {
 });
 
 // orders
-router.get('/pending-orders', checkRole('admin'), async (req, res) => {
+router.get('/pending-orders', verifyToken, checkRole('admin'), async (req, res) => {
 	const { date_start, date_end } = req.query;
 	console.log({ date_start, date_end });
 	try {
@@ -152,7 +153,7 @@ router.get('/pending-orders', checkRole('admin'), async (req, res) => {
 });
 
 //inventory
-router.get('/inventory', checkRole('admin'), async (req, res) => {
+router.get('/inventory', verifyToken, checkRole('admin'), async (req, res) => {
 	try {
 		const inventoryData = await getInventoryData();
 		res.json(inventoryData);
@@ -161,7 +162,7 @@ router.get('/inventory', checkRole('admin'), async (req, res) => {
 	}
 });
 
-router.get('/inventory_history', checkRole('admin'), async (req, res) => {
+router.get('/inventory_history', verifyToken, checkRole('admin'), async (req, res) => {
 	try {
 		const response = await pool.query(`
 			select  ih.id id,  date, operation_type, quantity, p.name, p.category from inventory_history ih
