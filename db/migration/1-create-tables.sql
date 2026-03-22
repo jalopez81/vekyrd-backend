@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS public.products
     stock INTEGER NOT NULL,
     imageurl VARCHAR(255),
     category VARCHAR(50),
+    active BOOLEAN DEFAULT TRUE,
     sku VARCHAR(50),
     description_large VARCHAR(1000),
     average_rating NUMERIC(3,2) DEFAULT 0
