@@ -102,6 +102,11 @@ router.post('/add-new-product', async (req, res) => {
 router.get('/inventory', verifyToken, checkRole('admin'), async (req, res) => {
 	try {
 		const inventory = await pool.query('SELECT * FROM products');
+		
+		inventory.rows.forEach(item => {
+			item.images = getProductImageUrls(item.sku);			
+		});
+		
 		res.status(200).json(inventory.rows);
 	} catch (err) {
 		console.error(err.message);
