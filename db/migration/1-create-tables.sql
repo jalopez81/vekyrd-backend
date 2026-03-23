@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS public.users
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -90,7 +91,6 @@ CREATE TABLE IF NOT EXISTS public.order_items
     price NUMERIC(10,2) NOT NULL
 );
 
-
 CREATE TABLE IF NOT EXISTS inventory_history (
   id SERIAL PRIMARY KEY,
   operation_type VARCHAR(50) NOT NULL,
@@ -98,8 +98,6 @@ CREATE TABLE IF NOT EXISTS inventory_history (
   quantity INTEGER NOT NULL,
   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 CREATE TABLE IF NOT EXISTS public.cart
 (
@@ -148,6 +146,15 @@ CREATE TABLE IF NOT EXISTS public.questionnaire
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- CONTACT US
+CREATE TABLE IF NOT EXISTS public.contactus (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    read BOOLEAN DEFAULT false, -- Requerido por tu ruta router.put
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- to later use pgp_sym_encrypt and pgp_sym_decrypt
 CREATE EXTENSION IF NOT EXISTS pgcrypto;

@@ -1,11 +1,11 @@
-INSERT INTO public.users (username, password, email, created_at)
+INSERT INTO public.users (username, password, email, created_at, active)
 VALUES
-('admin', '$2a$10$sDCWi13ywuXPWZnRF17sQO/FN984ykvVJjSZ1VAGfQUpUnjvQ/GzG', 'admin@gmail.com', CURRENT_TIMESTAMP),
-('user01', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user01@gmail.com', CURRENT_TIMESTAMP),
-('user02', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user02@gmail.com', CURRENT_TIMESTAMP),
-('user03', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user03@gmail.com', CURRENT_TIMESTAMP),
-('user04', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user04@gmail.com', CURRENT_TIMESTAMP),
-('user05', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user05@gmail.com', CURRENT_TIMESTAMP);
+('admin', '$2a$10$sDCWi13ywuXPWZnRF17sQO/FN984ykvVJjSZ1VAGfQUpUnjvQ/GzG', 'admin@gmail.com', CURRENT_TIMESTAMP, true),
+('user01', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user01@gmail.com', CURRENT_TIMESTAMP, true),
+('user02', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user02@gmail.com', CURRENT_TIMESTAMP, false),
+('user03', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user03@gmail.com', CURRENT_TIMESTAMP, false),
+('user04', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user04@gmail.com', CURRENT_TIMESTAMP, true),
+('user05', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user05@gmail.com', CURRENT_TIMESTAMP, true);
 
 --- ROLES (Usando subconsultas para evitar error de ID) ---
 INSERT INTO public.user_roles (user_id, role)
@@ -44,6 +44,15 @@ VALUES
 (2, 'Enviado', 59.99, CURRENT_TIMESTAMP, 'CONF002', 'ORDERHASH002', 50.00, 5.00, 4.99, 'TARJETA'),
 (3, 'Entregado', 119.98, CURRENT_TIMESTAMP, 'CONF003', 'ORDERHASH003', 100.00, 10.00, 9.98, 'TARJETA');
 
+INSERT INTO public.contactus (name, email, message, read, created_at)
+VALUES
+('John Doe', 'john.doe@example.com', 'Hello, I am interested in your products', false, CURRENT_TIMESTAMP),
+('Tania Smith', 'jane.smith@example.com', 'Do you guys have delivery?', false, CURRENT_TIMESTAMP),
+('Mike Brown', 'mike.brown@example.com', 'Tengo una pregunta sobre los productos', false, CURRENT_TIMESTAMP),
+('Sarah Jones', 'sarah.jones@example.com', 'I want to know more about your company', false, CURRENT_TIMESTAMP),
+('Jorge Lopez', 'jorge.lopez@example.com', 'Cual es el telefono de la compañía?', false, CURRENT_TIMESTAMP),
+('David Lee', 'david.lee@example.com', 'I want to know more about your company', false, CURRENT_TIMESTAMP),
+('Roberto Gomez', 'roberto.gomez@example.com', 'Alguien me puede ayudar?', false, CURRENT_TIMESTAMP);
 
 INSERT INTO public.wishlist (user_id, product_id)
 VALUES
@@ -55,3 +64,53 @@ VALUES
 
 INSERT INTO credit_cards (user_id, cardholder_name, card_number, cvv, expiration_date, billing_address, created_at) 
 VALUES (1, 'JORGE LOPEZ', pgp_sym_encrypt('4111111111111111', 'this_is_a_random_string_used_for_credit_card_number_encryption'), '123', '12-1-2031', '123 Lincoln St, Miami, FL 33101', CURRENT_TIMESTAMP);
+
+-- Datos para reportes
+
+CREATE INDEX idx_orders_hash ON orders(order_hash);
+CREATE INDEX idx_cart_hash ON cart(order_hash);
+
+
+-- 1. Insertamos órdenes con fechas variadas y hashes únicos
+INSERT INTO public.orders (user_id, status, total_price, created_at, confirmation_number, order_hash, subtotal, shipping, taxes, payment_method)
+VALUES
+-- Ventas de hace 20 días
+(2, 'Entregado', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(1, 'Entregado', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(5, 'Procesando', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(3, 'Entregado', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
+(4, 'Entregado', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
+
+-- Ventas de hace 10 días
+(4, 'Entregado', 115.50, NOW() - INTERVAL '10 days', 'CONF103', 'HASH103', 100.00, 8.00, 7.50, 'TARJETA'),
+(5, 'Entregado', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+(1, 'Procesando', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+(2, 'Procesando', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+
+-- Ventas de esta semana
+(1, 'Procesando', 85.20, NOW() - INTERVAL '3 days', 'CONF105', 'HASH105', 75.00, 5.00, 5.20, 'TARJETA'),
+(3, 'Procesando', 120.00, NOW() - INTERVAL '2 days', 'CONF107', 'HASH107', 100.00, 10.00, 10.00, 'TARJETA'),
+(5, 'Procesando', 150.00, NOW() - INTERVAL '1 day', 'CONF108', 'HASH108', 125.00, 10.00, 10.00, 'TARJETA'),
+(4, 'Enviado', 99.99, NOW() - INTERVAL '1 day', 'CONF109', 'HASH109', 85.00, 5.00, 4.99, 'TARJETA'),
+(2, 'Enviado', 28.99, NOW() - INTERVAL '1 day', 'CONF106', 'HASH106', 25.00, 2.00, 1.99, 'TARJETA');
+
+-- 2. Insertamos productos en el carrito usando order_hash y precios manuales
+INSERT INTO public.cart (product_id, quantity, price, user_id, order_hash, created_at)
+VALUES
+-- Para la orden HASH101 (User 2)
+(1, 1, 30.99, 2, 'HASH101', NOW() - INTERVAL '20 days'),
+(2, 1, 23.99, 2, 'HASH101', NOW() - INTERVAL '20 days'),
+
+-- Para la orden HASH102 (User 3)
+(11, 1, 18.99, 3, 'HASH102', NOW() - INTERVAL '19 days'),
+
+-- Para la orden HASH103 (User 4)
+(4, 2, 28.99, 4, 'HASH103', NOW() - INTERVAL '10 days'),
+(9, 1, 25.99, 4, 'HASH103', NOW() - INTERVAL '10 days'),
+
+-- Para la orden HASH105 (User 1)
+(7, 1, 19.99, 1, 'HASH105', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 1, 'HASH105', NOW() - INTERVAL '3 days'),
+
+-- Para la orden HASH106 (User 2)
+(5, 1, 15.49, 2, 'HASH106', NOW() - INTERVAL '1 day');

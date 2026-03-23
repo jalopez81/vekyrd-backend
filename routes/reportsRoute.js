@@ -49,7 +49,7 @@ const getSalesData = async ({ start_date, end_date }) => {
 		p.price,
 		p.category
 		FROM orders o
-		JOIN cart c ON c.order_id = o.id
+		JOIN cart c ON c.order_hash = o.order_hash
 		JOIN products p ON p.id = c.product_id
 		WHERE o.created_at >= $1 AND o.created_at <= $2
 		`,
@@ -142,7 +142,7 @@ router.get('/pending-orders', verifyToken, checkRole('admin'), async (req, res) 
 			orders o 
 			join users u on u.id = o.user_id 
 		where 
-			o.status = 'pending' and
+			LOWER(o.status) = 'procesando' and
 			o.created_at >= $1 AND o.created_at <= $2
 		`, [date_start, date_end]);
 
@@ -239,7 +239,6 @@ router.post('/users', async (req, res) => {
 			user_id,
 			u.username, 
 			u.email,
-			u.active,
 			COUNT(user_id) AS logins
 			FROM login_history
 			JOIN users u on u.id = user_id
@@ -251,6 +250,7 @@ router.post('/users', async (req, res) => {
 
 		res.json(usersData);
 	} catch (err) {
+		console.log(err)
 		res.status(500).json({ message: 'Error fetching user data', error: err });
 	}
 });
