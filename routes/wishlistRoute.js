@@ -6,7 +6,7 @@ import verifyToken from '../middlewares/authMiddleware.js';
 const pool = getNewPool();
 const router = express.Router();
 
-router.get('/',  async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
 	 if (!req.user) {
 		return res.status(200).json([]); 
 	}
@@ -20,7 +20,7 @@ router.get('/',  async (req, res) => {
 	}
 });
 
-router.post('/:productId', verifyToken, checkRole('customer'), async (req, res) => {
+router.post('/:productId', verifyToken, checkRole(['customer','admin','moderator', 'guest']), async (req, res) => {
 	const { productId } = req.params;
 
 	if (!productId) {
@@ -39,7 +39,7 @@ router.post('/:productId', verifyToken, checkRole('customer'), async (req, res) 
 	}
 });
 
-router.delete('/:productId', verifyToken, checkRole('customer'), async (req, res) => {
+router.delete('/:productId', verifyToken, checkRole(['customer','admin','moderator', 'guest']), async (req, res) => {
 	const { productId } = req.params;
 
 	try {
