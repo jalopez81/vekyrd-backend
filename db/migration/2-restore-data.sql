@@ -75,24 +75,24 @@ CREATE INDEX idx_cart_hash ON cart(order_hash);
 INSERT INTO public.orders (user_id, status, total_price, created_at, confirmation_number, order_hash, subtotal, shipping, taxes, payment_method)
 VALUES
 -- Ventas de hace 20 días
-(2, 'Entregado', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
-(1, 'Entregado', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
-(5, 'Procesando', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
-(3, 'Entregado', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
-(4, 'Entregado', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
+(2, 'paid', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(1, 'pending', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(5, 'cancelled', 54.98, NOW() - INTERVAL '20 days', 'CONF101', 'HASH101', 45.00, 5.00, 4.98, 'TARJETA'),
+(3, 'paid', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
+(4, 'pending', 30.99, NOW() - INTERVAL '19 days', 'CONF102', 'HASH102', 25.00, 3.00, 2.99, 'PAYPAL'),
 
 -- Ventas de hace 10 días
-(4, 'Entregado', 115.50, NOW() - INTERVAL '10 days', 'CONF103', 'HASH103', 100.00, 8.00, 7.50, 'TARJETA'),
-(5, 'Entregado', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
-(1, 'Procesando', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
-(2, 'Procesando', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+(4, 'cancelled', 115.50, NOW() - INTERVAL '10 days', 'CONF103', 'HASH103', 100.00, 8.00, 7.50, 'TARJETA'),
+(5, 'paid', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+(1, 'pending', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
+(2, 'canceled', 45.00, NOW() - INTERVAL '9 days', 'CONF104', 'HASH104', 38.00, 4.00, 3.00, 'EFECTIVO'),
 
 -- Ventas de esta semana
-(1, 'Procesando', 85.20, NOW() - INTERVAL '3 days', 'CONF105', 'HASH105', 75.00, 5.00, 5.20, 'TARJETA'),
-(3, 'Procesando', 120.00, NOW() - INTERVAL '2 days', 'CONF107', 'HASH107', 100.00, 10.00, 10.00, 'TARJETA'),
-(5, 'Procesando', 150.00, NOW() - INTERVAL '1 day', 'CONF108', 'HASH108', 125.00, 10.00, 10.00, 'TARJETA'),
-(4, 'Enviado', 99.99, NOW() - INTERVAL '1 day', 'CONF109', 'HASH109', 85.00, 5.00, 4.99, 'TARJETA'),
-(2, 'Enviado', 28.99, NOW() - INTERVAL '1 day', 'CONF106', 'HASH106', 25.00, 2.00, 1.99, 'TARJETA');
+(1, 'paid', 85.20, NOW() - INTERVAL '3 days', 'CONF105', 'HASH105', 75.00, 5.00, 5.20, 'TARJETA'),
+(3, 'pending', 120.00, NOW() - INTERVAL '2 days', 'CONF107', 'HASH107', 100.00, 10.00, 10.00, 'TARJETA'),
+(5, 'cancelled', 150.00, NOW() - INTERVAL '1 day', 'CONF108', 'HASH108', 125.00, 10.00, 10.00, 'TARJETA'),
+(4, 'paid', 99.99, NOW() - INTERVAL '1 day', 'CONF109', 'HASH109', 85.00, 5.00, 4.99, 'TARJETA'),
+(2, 'pending', 28.99, NOW() - INTERVAL '1 day', 'CONF106', 'HASH106', 25.00, 2.00, 1.99, 'TARJETA');
 
 -- 2. Insertamos productos en el carrito usando order_hash y precios manuales
 INSERT INTO public.cart (product_id, quantity, price, user_id, order_hash, created_at)
