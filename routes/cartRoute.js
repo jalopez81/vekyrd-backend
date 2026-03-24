@@ -2,6 +2,7 @@ import getErrorHtml from '../helpers/getErrorHtml.js';
 import getNewPool from '../helpers/getNewPool.js';
 import express from 'express';
 import verifyToken from '../middlewares/authMiddleware.js';
+import { getProductImageUrls } from '../helpers/getPublicImageUrl.js';
 
 const router = express.Router();
 const pool = getNewPool();
@@ -64,8 +65,8 @@ router.get('/:orderHash', async (req, res) => {
 			c.quantity, 
 			p.average_rating, 
 			p.description, 
-			p.imageUrl1, 
-			p.name, 
+			p.name,
+			p.sku,
 			p.price, 
 			p.stock, product_id
 			FROM cart c 
@@ -73,6 +74,10 @@ router.get('/:orderHash', async (req, res) => {
 			WHERE c.order_hash = $1`,
 			[orderHash]
 		);
+
+		cart.rows.forEach(product => {
+			product.images = getProductImageUrls(product.sku);
+		});
 
 		// Verificar disponibilidad de productos
 		const validatedCart = cart.rows.map(item => {

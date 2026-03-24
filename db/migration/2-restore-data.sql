@@ -108,9 +108,37 @@ VALUES
 (4, 2, 28.99, 4, 'HASH103', NOW() - INTERVAL '10 days'),
 (9, 1, 25.99, 4, 'HASH103', NOW() - INTERVAL '10 days'),
 
+-- Para la orden HASH103 (User 4)
+(4, 2, 28.99, 4, 'HASH104', NOW() - INTERVAL '10 days'),
+(9, 1, 25.99, 4, 'HASH104', NOW() - INTERVAL '10 days'),
+
 -- Para la orden HASH105 (User 1)
 (7, 1, 19.99, 1, 'HASH105', NOW() - INTERVAL '3 days'),
 (1, 1, 30.99, 1, 'HASH105', NOW() - INTERVAL '3 days'),
 
 -- Para la orden HASH106 (User 2)
-(5, 1, 15.49, 2, 'HASH106', NOW() - INTERVAL '1 day');
+(5, 1, 15.49, 2, 'HASH106', NOW() - INTERVAL '1 day'),
+
+-- Para la orden HASH105 (User 1)
+(7, 1, 19.99, 1, 'HASH107', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 1, 'HASH107', NOW() - INTERVAL '3 days'),
+
+-- Para la orden HASH105 (User 1)
+(7, 1, 19.99, 2, 'HASH108', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 2, 'HASH108', NOW() - INTERVAL '3 days'),
+
+-- Para la orden HASH105 (User 1)
+(7, 1, 19.99, 1, 'HASH109', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 1, 'HASH109', NOW() - INTERVAL '3 days'),
+
+-- Para la orden ORDERHASH001 (User 1)
+(7, 1, 19.99, 1, 'ORDERHASH001', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 1, 'ORDERHASH001', NOW() - INTERVAL '3 days'),
+
+-- Para la orden ORDERHASH002 (User 3)
+(7, 1, 19.99, 3, 'ORDERHASH002', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 3, 'ORDERHASH002', NOW() - INTERVAL '3 days'),
+
+-- Para la orden ORDERHASH003 (User 3)
+(7, 1, 19.99, 3, 'ORDERHASH003', NOW() - INTERVAL '3 days'),
+(1, 1, 30.99, 3, 'ORDERHASH003', NOW() - INTERVAL '3 days');

@@ -11,6 +11,7 @@
     "db:init": "psql -h localhost -U postgres -d vekyrd-ecommerce-db -f ./db/migration/1-create-tables.sql",
     "db:seed": "psql -h localhost -U postgres -d vekyrd-ecommerce-db -f ./db/migration/2-restore-data.sql",
     "db:reset": "npm run db:init && npm run db:seed",
+    
     "// --- PROD SCRIPTS ---": "",
     "db:init:prod": "node ./db/migration/create-and-restore-db-prod.js init",
     "db:seed:prod": "node ./db/migration/create-and-restore-db-prod.js seed",
