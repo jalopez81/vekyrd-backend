@@ -1,17 +1,36 @@
-INSERT INTO public.users (username, password, email, created_at, active)
+INSERT INTO public.users 
+(username, first_name, last_name, phone_number, address, password, email, created_at, active)
 VALUES
-('admin', '$2a$10$sDCWi13ywuXPWZnRF17sQO/FN984ykvVJjSZ1VAGfQUpUnjvQ/GzG', 'admin@gmail.com', CURRENT_TIMESTAMP, true),
-('user01', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user01@gmail.com', CURRENT_TIMESTAMP, true),
-('user02', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user02@gmail.com', CURRENT_TIMESTAMP, false),
-('user03', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user03@gmail.com', CURRENT_TIMESTAMP, false),
-('user04', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user04@gmail.com', CURRENT_TIMESTAMP, true),
-('user05', '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user05@gmail.com', CURRENT_TIMESTAMP, true);
+(
+    'admin', 'System', 'Administrator', '+1-800-555-0100', '100 Main St, New York, NY 10001', 
+    '$2a$10$sDCWi13ywuXPWZnRF17sQO/FN984ykvVJjSZ1VAGfQUpUnjvQ/GzG', 'admin@gmail.com', CURRENT_TIMESTAMP, true
+),
+(
+    'user01', 'John', 'Smith', '+1-305-555-0123', '742 Evergreen Terrace, Miami, FL 33101', 
+    '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user01@gmail.com', CURRENT_TIMESTAMP, true
+),
+(
+    'user02', 'Emily', 'Johnson', '+1-212-555-0156', '450 Fifth Avenue, New York, NY 10118', 
+    '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user02@gmail.com', CURRENT_TIMESTAMP, false
+),
+(
+    'user03', 'Michael', 'Brown', '+1-312-555-0189', '233 S Wacker Dr, Chicago, IL 60606', 
+    '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user03@gmail.com', CURRENT_TIMESTAMP, false
+),
+(
+    'user04', 'Sarah', 'Wilson', '+1-213-555-0144', '1313 Disneyland Dr, Anaheim, CA 92802', 
+    '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user04@gmail.com', CURRENT_TIMESTAMP, true
+),
+(
+    'user05', 'David', 'Miller', '+1-702-555-0177', '3600 S Las Vegas Blvd, Las Vegas, NV 89109', 
+    '$2a$10$QNnfEfcVrmWC8aLL.N/4c.9jnjONh5dYvCohe2v2yeeI6u4sEKNFW', 'user05@gmail.com', CURRENT_TIMESTAMP, true
+);
 
 --- ROLES (Usando subconsultas para evitar error de ID) ---
 INSERT INTO public.user_roles (user_id, role)
 VALUES
   ((SELECT id FROM public.users WHERE username = 'admin'), 'admin'),
-  ((SELECT id FROM public.users WHERE username = 'user01'), 'user'),
+  ((SELECT id FROM public.users WHERE username = 'user01'), 'customer'),
   ((SELECT id FROM public.users WHERE username = 'user02'), 'moderator');
 
 INSERT INTO public.products (name, description, price, stock, sku, category, description_large, average_rating)
