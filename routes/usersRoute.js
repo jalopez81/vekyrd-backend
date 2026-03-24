@@ -103,16 +103,12 @@ router.post('/createCreditCard', verifyToken, checkRole(['customer', 'admin', 'm
         const { card_number, cvv, expiration_date, cardholder_name, billing_address } = req.body;
         const parsedExpirationDate = new Date(expiration_date).toISOString(); // "2026-06-01T00:00:00.000Z"
 
+		await pool.query('DELETE FROM credit_cards WHERE user_id = $1', [userId]);
+
         await pool.query(`
             INSERT INTO credit_cards (user_id, card_number, cvv, expiration_date, cardholder_name, billing_address)
             VALUES ($1, pgp_sym_encrypt($2, $3), $4, $5, $6, $7)
-            ON CONFLICT (user_id) 
-            DO UPDATE SET 
-                card_number = pgp_sym_encrypt($2, $3)::bytea,
-                cvv = $4,
-                expiration_date = $5,
-                cardholder_name = $6,
-				billing_address = $7
+            returning *
         `, [userId, card_number, encryptionKey, cvv, parsedExpirationDate, cardholder_name, billing_address]);
 
         res.status(200).send({ message: 'La tarjeta de crédito ha sido guardada o actualizada' });
